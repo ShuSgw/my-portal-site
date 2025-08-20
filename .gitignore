@@ -1,0 +1,80 @@
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
+.DS_Store
+# Security sensitive files
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+config/secrets.php
+.env.local
+.env.*.local
+
+# OS generated files
+Thumbs.db
+*.tmp
+*.swp
+*.swo
+*~
+
+# IDE files
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+logs/
+
+# Laravel session files and cache
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+/storage/framework/cache/data/*
+!/storage/framework/cache/data/.gitignore
+
+# Database dumps and backups
+*.sql
+*.dump
+*.backup
+database/*.sql
+sql/
+
+# User uploaded files and media
+/public/uploads/
+/public/images/user/
+/public/media/
+/storage/app/uploads/
+
+# Backup and temporary files
+*.bak
+*.backup
+*.orig
+*.save
+*.copy
+*.old
+*.tmp
+*.temp
+
+# Bootstrap cache (Laravel specific)
+/bootstrap/cache/*.php
+!/bootstrap/cache/.gitignore
+
+# Application uploads and storage
+/storage/app/public/uploads/
