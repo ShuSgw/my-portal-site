@@ -1,17 +1,44 @@
+# =========================================================================
+# Laravel プロジェクト設定
+# サーバー制約によるネストしたpublicフォルダ構造に対応
+# =========================================================================
+
 Options +SymLinksIfOwnerMatch
 RewriteEngine On
 
-# Allow Installatron requests
+# -------------------------------------------------------------------------
+# サーバー専用リクエスト処理
+# -------------------------------------------------------------------------
+
+# Installatronメンテナンス用リクエストを許可
 RewriteCond %{REQUEST_FILENAME} deleteme\.\w+\.php
 RewriteRule (.*) - [L]
 
-RewriteRule ^ index.php [L]
+# -------------------------------------------------------------------------
+# publicフォルダへのルーティング
+# -------------------------------------------------------------------------
 
-# Protect .env and other sensitive files
-<FilesMatch "\.(env|env.example|git|htaccess|log|sql|json|lock|md)$">
-  Order allow,deny
-  Deny from all
+# ステップ1: まだpublicフォルダにいない場合、publicフォルダにリダイレクト
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /public/$1 [L]
+
+# ステップ2: publicフォルダ内でファイルが存在しない場合、Laravelのindex.phpに転送
+RewriteCond %{REQUEST_URI} ^/public/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^public/(.*)$ /public/index.php [L]
+
+# -------------------------------------------------------------------------
+# セキュリティ保護
+# -------------------------------------------------------------------------
+
+# 機密ファイルへの直接アクセスを拒否
+<FilesMatch "\.(env|env\.example|git|htaccess|log|sql|json|lock|md)$">
+    Order allow,deny
+    Deny from all
 </FilesMatch>
 
-# Block direct access to core Laravel directories
+# Laravelコアディレクトリへの直接アクセスをブロック
 RedirectMatch 403 ^/(app|bootstrap|config|database|resources|routes|storage)/.*
